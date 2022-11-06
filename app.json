@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dheisomgomes.VacaTorrent"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "642e7a98-7cc2-4d82-ae41-4060168f4f31"
+      }
     }
   }
 }
