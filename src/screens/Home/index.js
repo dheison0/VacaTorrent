@@ -1,5 +1,8 @@
 import { Component, useState } from 'react';
-import { View, Button, TextInput, ToastAndroid, ScrollView, RefreshControl } from 'react-native';
+import {
+  Button, FlatList, View, RefreshControl,
+  TextInput, ToastAndroid
+} from 'react-native';
 import { url } from '../../vars.js';
 import axios from 'axios';
 import styles from './styles.js';
@@ -38,26 +41,26 @@ class Home extends Component {
   }
   async updateRecommendedList() {
     this.setState({ content: (<Loading msg="Carregando lista..." />) });
-    axios.get(url, { timeout: 10000 }).then(result => {
+    axios.get(url, { timeout: 10000 }).then(response => {
       this.setState({
         content: (
-          <ScrollView
-            style={styles.flex}
-            refreshControl={(
-              <RefreshControl onRefresh={() => this.updateRecommendedList()} />
-            )}
-          >
+          <>
             <SearchBox navigation={this.props.navigation} />
-            {result.data.map((rec, index) => (
-              <Recommendation
-                data={rec}
-                onPress={() => this.props.navigation.navigate("Baixar", rec)}
-                key={index}
-              />
-            ))}
-          </ScrollView>
+            <FlatList
+              data={response.data}
+              renderItem={({ item }) => (
+                <Recommendation
+                  data={item}
+                  onPress={() => this.props.navigation.navigate("Baixar", item)}
+                />
+              )}
+              refreshControl={(
+                <RefreshControl onRefresh={() => this.updateRecommendedList()} />
+              )}
+            />
+          </>
         )
-      });
+      })
     }).catch(error => {
       this.setState({
         content: (

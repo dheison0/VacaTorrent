@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { url } from '../../vars';
 import axios from 'axios';
 import styles from './styles.js';
@@ -19,18 +19,18 @@ class Search extends Component {
     axios.get(
       `${url}/search`,
       { params: { q: this.props.route.params.query } }
-    ).then(result => {
+    ).then(response => {
       this.setState({
         content: (
-          <ScrollView>
-            {result.data.results.map((res, index) => (
+          <FlatList
+            data={response.data.results}
+            renderItem={({item}) => (
               <SearchResult
-                data={res}
-                key={index}
-                onPress={() => this.props.navigation.navigate("Baixar", res)}
+                data={item}
+                onPress={() => this.props.navigation.navigate("Baixar", item)}
               />
-            ))}
-          </ScrollView>
+            )}
+          />
         )
       })
     }).catch(error => {

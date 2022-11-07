@@ -3,9 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: {
-    flex: 1,
     flexDirection: 'row',
-    margin: 15
+    margin: 15,
   },
   input: {
     flex: 1,
