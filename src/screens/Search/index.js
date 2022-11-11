@@ -1,32 +1,51 @@
 import { Component } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, ToastAndroid, View } from 'react-native';
 import { url } from '../../vars';
 import axios from 'axios';
 import styles from './styles.js';
 import Loading from '../../components/Loading.js';
+import LoadingMore from '../../components/LoadingMore.js';
 import Error from '../../components/Error.js';
 import SearchResult from '../../components/SearchResult.js';
 
 class Search extends Component {
+  state = {
+    error: null,
+    isLoading: true,
+    isLoadingMore: false,
+    loadPage: 1,
+    results: [],
+    stopLoadingMore: false,
+  }
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: true,
-      isLoadingMore: false,
-      loadPage: 1,
-      stopLoadingMore: false,
-      results: [],
-    };
     props.navigation.setOptions({ title: `Procurar: ${props.route.params.query}` })
     this.getSearchResults();
   }
+  reset() {
+    this.setState({
+      error: null,
+      isLoading: true,
+      isLoadingMore: false,
+      loadPage: 1,
+      results: [],
+      stopLoadingMore: false,
+    });
+    this.getSearchResults();
+  }
   getSearchResults() {
-    if (this.state.stopLoadingMore) return;
-    this.setState({ isLoadingMore: this.loadPage !== 1 });
+    if (this.state.stopLoadingMore || this.state.isLoadingMore) {
+      return;
+    } else if (!this.state.isLoading) {
+      this.setState({ isLoadingMore: true });
+    }
     axios.get(
       `${url}/search`,
       {
-        params: { page: this.state.loadPage, q: this.props.route.params.query }
+        params: {
+          page: this.state.loadPage,
+          q: this.props.route.params.query
+        }
       }
     ).then(response => {
       this.setState({
@@ -37,46 +56,50 @@ class Search extends Component {
         stopLoadingMore: !response.data.page.has_next,
       });
     }).catch(error => {
+      const errMsg = `Falha durante a pesquisa!\n${error.toString()}`;
+      if (this.state.isLoadingMore) {
+        ToastAndroid.show(errMsg, ToastAndroid.LONG);
+        this.setState({ error: null });
+      } else {
+        this.setState({ error: errMsg });
+      }
       this.setState({
-        content: (
-          <Error
-            msg={`Falha durante a pesquisa!\n${error.toString()}`}
-            onRetry={() => this.getSearchResults()}
-          />
-        )
+        isLoading: false,
+        isLoadingMore: false
       });
     });
   }
-  render() {
-    const renderFooter = () => (
-      <>
-        {this.state.isLoadingMore ? (
-          <View style={styles.loadingMore}>
-            <ActivityIndicator color="#11E" size="large" />
-            <Text style={styles.loadingMoreText}>Carregando mais...</Text>
-          </View>
-        ) : null}
-      </>
+  whenLoading() {
+    return (<Loading msg="Pesquisando..." />);
+  }
+  onError() {
+    return (
+      <Error msg={this.state.error} onRetry={() => this.reset()} />
     );
+  }
+  onSuccess() {
+    return (
+      <FlatList
+        data={this.state.results}
+        renderItem={({ item }) => (
+          <SearchResult
+            data={item}
+            onPress={() => this.props.navigation.navigate("Baixar", item)}
+          />
+        )}
+        ListFooterComponent={(
+          <LoadingMore isLoading={this.state.isLoadingMore} />
+        )}
+        onEndReached={() => this.getSearchResults()}
+      />
+    );
+  }
+  render() {
     return (
       <View style={styles.flex}>
-        {this.state.isLoading ? (
-          <Loading msg="Pesquisando..." />
-        ) : (
-          <FlatList
-            data={this.state.results}
-            keyExtractor={({ index }) => index}
-            renderItem={({ item }) => (
-              <SearchResult
-                data={item}
-                onPress={() => this.props.navigation.navigate("Baixar", item)}
-              />
-            )}
-            ListFooterComponent={renderFooter}
-            onEndReached={() => this.getSearchResults()}
-          />
-        )
-        }
+        {this.state.isLoading ? this.whenLoading() : (
+          this.state.error ? this.onError() : this.onSuccess()
+        )}
       </View>
     );
   }
