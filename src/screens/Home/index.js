@@ -7,6 +7,7 @@ import { url } from '../../vars.js';
 import axios from 'axios';
 import styles from './styles.js';
 import Loading from '../../components/Loading.js';
+import LoadingMore from '../../components/LoadingMore.js';
 import Recommendation from '../../components/Recommendation.js';
 import Error from '../../components/Error.js';
 
@@ -34,48 +35,97 @@ const SearchBox = ({ navigation }) => {
 };
 
 class Home extends Component {
+  state = {
+    error: null,
+    isLoading: true,
+    isLoadingMore: false,
+    results: [],
+    loadPage: 1,
+  }
   constructor(props) {
     super(props);
-    this.state = { content: (<Loading msg="Carregando lista..." />) };
+    this.updateRecommendedList();
+  }
+  reset() {
+    this.setState({
+      error: null,
+      isLoading: true,
+      isLoadingMore: false,
+      results: [],
+      loadPage: 1,
+    });
     this.updateRecommendedList();
   }
   async updateRecommendedList() {
-    this.setState({ content: (<Loading msg="Carregando lista..." />) });
-    axios.get(url, { timeout: 10000 }).then(response => {
-      this.setState({
-        content: (
-          <>
-            <SearchBox navigation={this.props.navigation} />
-            <FlatList
-              data={response.data}
-              renderItem={({ item }) => (
-                <Recommendation
-                  data={item}
-                  onPress={() => this.props.navigation.navigate("Baixar", item)}
-                />
-              )}
-              refreshControl={(
-                <RefreshControl onRefresh={() => this.updateRecommendedList()} />
-              )}
-            />
-          </>
-        )
-      })
-    }).catch(error => {
-      this.setState({
-        content: (
-          <Error
-            msg={`Não foi possivel obter a lista de recomendados!\n${error.toString()}`}
-            onRetry={() => this.updateRecommendedList()}
-          />
-        )
+    if (!this.state.isLoading) {
+      this.setState({ isLoadingMore: true });
+    }
+    axios.get(`${url}/${this.state.loadPage}`, { timeout: 10000 })
+      .then(response => {
+        this.setState({
+          error: null,
+          isLoading: false,
+          isLoadingMore: false,
+          loadPage: this.state.loadPage + 1,
+          results: [...this.state.results, ...response.data],
+        });
+      }).catch(error => {
+        const errMsg = `Não foi possivel obter a lista de recomendados!\n${error.toString()}`;
+        if (this.state.isLoadingMore) {
+          ToastAndroid.show(errMsg, ToastAndroid.LONG);
+        } else {
+          this.setState({ error: errMsg });
+        }
+        this.setState({
+          isLoading: false,
+          isLoadingMore: false,
+        });
       });
-    });
+  }
+  onSuccess() {
+    return (
+      <>
+        <SearchBox navigation={this.props.navigation} />
+        <FlatList
+          data={this.state.results}
+          renderItem={({ item }) => (
+            <Recommendation
+              data={item}
+              onPress={() => this.props.navigation.navigate("Baixar", item)}
+            />
+          )}
+          refreshControl={(<RefreshControl onRefresh={() => this.reset()} />)}
+          ListFooterComponent={(
+            <LoadingMore
+              isLoading={this.state.isLoadingMore}
+            />
+          )}
+          onEndReached={() => this.updateRecommendedList()}
+        />
+      </>
+    );
+  }
+  onError() {
+    return (
+      <Error
+        msg={this.state.error}
+        onRetry={() => this.reset()}
+      />
+    );
+  }
+  whenLoading() {
+    return (
+      <Loading
+        msg="Carregando recomendados..."
+      />
+    );
   }
   render() {
     return (
       <View style={styles.flex}>
-        {this.state.content}
+        {this.state.isLoading ? this.whenLoading() : (
+          this.state.error ? this.onError() : this.onSuccess()
+        )}
       </View>
     )
   }
