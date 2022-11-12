@@ -1,3 +1,3 @@
-const url = 'http://10.147.17.105:8484';
+const url = 'https://vacatorrent-api-dheisom.koyeb.app';
 
 export { url };
