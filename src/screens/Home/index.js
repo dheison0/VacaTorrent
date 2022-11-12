@@ -8,7 +8,7 @@ import axios from 'axios';
 import styles from './styles.js';
 import Loading from '../../components/Loading.js';
 import LoadingMore from '../../components/LoadingMore.js';
-import Recommendation from '../../components/Recommendation.js';
+import Recommendation from './Recommendation.js';
 import Error from '../../components/Error.js';
 
 const SearchBox = ({ navigation }) => {
@@ -21,7 +21,7 @@ const SearchBox = ({ navigation }) => {
     }
   }
   return (
-    <View style={styles.container}>
+    <View style={styles.root}>
       <TextInput
         style={styles.input}
         keyboardType='default'
@@ -115,10 +115,9 @@ class Home extends Component {
   }
   render() {
     return (
-      <View style={styles.flex}>
+      <View style={{ flex: 1 }}>
         {this.state.isLoading ? this.whenLoading() : (
-          this.state.error ? this.onError() : this.onSuccess()
-        )}
+          this.state.error ? this.onError() : this.onSuccess())}
       </View>
     )
   }
