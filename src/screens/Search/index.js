@@ -2,11 +2,11 @@ import { Component } from 'react';
 import { FlatList, ToastAndroid, View } from 'react-native';
 import { url } from '../../vars';
 import axios from 'axios';
-import styles from './styles.js';
-import Loading from '../../components/Loading.js';
-import LoadingMore from '../../components/LoadingMore.js';
-import Error from '../../components/Error.js';
-import SearchResult from '../../components/SearchResult.js';
+import styles from './styles';
+import Loading from '../../components/Loading';
+import LoadingMore from '../../components/LoadingMore';
+import Error from '../../components/Error';
+import SearchResult from './SearchResult';
 
 class Search extends Component {
   state = {
@@ -96,7 +96,7 @@ class Search extends Component {
   }
   render() {
     return (
-      <View style={styles.flex}>
+      <View style={{ flex: 1 }}>
         {this.state.isLoading ? this.whenLoading() : (
           this.state.error ? this.onError() : this.onSuccess()
         )}
