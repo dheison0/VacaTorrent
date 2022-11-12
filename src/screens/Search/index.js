@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ActivityIndicator, FlatList, Text, ToastAndroid, View } from 'react-native';
+import { FlatList, ToastAndroid, View } from 'react-native';
 import { url } from '../../vars';
 import axios from 'axios';
 import styles from './styles.js';

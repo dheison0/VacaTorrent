@@ -15,7 +15,7 @@ const SearchBox = ({ navigation }) => {
   const [input, setInput] = useState('');
   const search = () => {
     if (input.trim() == '') {
-      ToastAndroid.show('Preencha o campo de pesquisa antes...', ToastAndroid.SHORT)
+      ToastAndroid.show('Preencha o campo de pesquisa antes...', ToastAndroid.SHORT);
     } else {
       navigation.navigate('Procurar', { query: input });
     }
@@ -96,9 +96,7 @@ class Home extends Component {
           )}
           refreshControl={(<RefreshControl onRefresh={() => this.reset()} />)}
           ListFooterComponent={(
-            <LoadingMore
-              isLoading={this.state.isLoadingMore}
-            />
+            <LoadingMore isLoading={this.state.isLoadingMore} />
           )}
           onEndReached={() => this.updateRecommendedList()}
         />
@@ -107,17 +105,12 @@ class Home extends Component {
   }
   onError() {
     return (
-      <Error
-        msg={this.state.error}
-        onRetry={() => this.reset()}
-      />
+      <Error msg={this.state.error} onRetry={() => this.reset()} />
     );
   }
   whenLoading() {
     return (
-      <Loading
-        msg="Carregando recomendados..."
-      />
+      <Loading msg="Carregando recomendados..." />
     );
   }
   render() {
