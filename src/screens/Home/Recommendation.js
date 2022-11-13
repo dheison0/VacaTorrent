@@ -1,8 +1,8 @@
-import { View, Text, Image, TouchableHighlight } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 const Recommendation = ({ data, onPress }) => (
-  <TouchableHighlight style={styles.containerWrap} onPress={onPress}>
+  <TouchableOpacity style={styles.containerWrap} onPress={onPress}>
     <View style={styles.container}>
       <Image style={styles.thumbanil} source={{ uri: data.thumbnail }} />
       <View style={styles.informations}>
@@ -15,7 +15,7 @@ const Recommendation = ({ data, onPress }) => (
         <View></View>
       </View>
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 );
 
 export default Recommendation;
