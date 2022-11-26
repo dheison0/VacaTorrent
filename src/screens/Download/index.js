@@ -1,10 +1,14 @@
 import { Component } from 'react';
-import { Button, ScrollView, Text, Image, View, Linking, ToastAndroid, FlatList } from 'react-native';
-import { url } from '../../vars.js';
+import {
+  Button, ScrollView, Text, Image, View,
+  Linking, ToastAndroid, useColorScheme
+} from 'react-native';
+import { url } from '../../vars';
 import axios from 'axios';
-import styles from './styles.js';
-import Loading from '../../components/Loading.js';
-import Error from '../../components/Error.js';
+import styles from './styles';
+import BookmarkButton from './bookmark';
+import Loading from '../../components/Loading';
+import Error from '../../components/Error';
 
 const IMDB = ({ rating }) => (
   <View style={styles.imdb}>
@@ -30,22 +34,21 @@ const LinkButton = ({ item }) => (
   </View>
 );
 
-const Download = ({ data }) => (
-  <ScrollView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      <View style={styles.base}>
-        <Image style={styles.thumbnail} source={{ uri: data.thumbnail }} />
-        <Text style={styles.title}>{data.title}</Text>
-        {data.imdb > 0 ? (<IMDB rating={data.imdb} />) : null}
+const Download = ({ data }) => {
+  return (
+    <ScrollView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.base}>
+          <Image style={styles.thumbnail} source={{ uri: data.thumbnail }} />
+          <Text style={styles.title}>{data.title}</Text>
+          {data.imdb > 0 ? (<IMDB rating={data.imdb} />) : null}
+        </View>
+        <Text style={styles.sinopse}>{data.sinopse}</Text>
+        {data.links.map((v, k) => (<LinkButton item={v} key={k} />))}
       </View>
-      <Text style={styles.sinopse}>{data.sinopse}</Text>
-      <FlatList
-        data={data.links}
-        renderItem={LinkButton}
-      />
-    </View>
-  </ScrollView>
-);
+    </ScrollView>
+  );
+};
 
 class DownloadScreen extends Component {
   state = {
@@ -66,6 +69,15 @@ class DownloadScreen extends Component {
       this.setState({
         isLoading: false,
         result: response.data,
+      });
+      this.props.navigation.setOptions({
+        headerRight: () => (
+          <BookmarkButton data={{
+            ...response.data,
+            url: this.props.route.params.url,
+            links: undefined,
+          }} />
+        )
       });
     }).catch(error => {
       this.setState({

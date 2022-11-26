@@ -12,12 +12,11 @@
         "buildType": "apk"
       }
     },
-    "release": {
+    "production": {
       "android": {
         "gradleCommand": ":app:assembleRelease"
       }
-    },
-    "production": {}
+    }
   },
   "submit": {
     "production": {}

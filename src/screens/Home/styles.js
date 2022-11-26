@@ -1,35 +1,23 @@
 import { StyleSheet } from "react-native";
+import { colors } from '../../vars';
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
+    backgroundColor: colors.light.background,
+  },
+  searchContainer: {
     flexDirection: 'row',
     margin: 15,
+    alignItems: 'center'
   },
   input: {
     flex: 1,
     padding: 4,
     marginRight: 10,
     borderWidth: 2,
-    borderColor: '#11A',
+    borderColor: '#95adbe',
     borderRadius: 3
-  },
-  containerWrap: {
-    backgroundColor: '#A9F0D1',
-    borderColor: '#A9F0D1',
-    margin: 8,
-    borderWidth: 6,
-    borderRadius: 5,
-    padding: 2,
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  thumbanil: {
-    width: 125,
-    height: 185,
-    marginRight: 5,
-    borderRadius: 4,
   },
   informations: {
     flex: 1,

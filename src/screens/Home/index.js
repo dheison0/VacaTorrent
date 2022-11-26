@@ -1,15 +1,15 @@
 import { Component, useState } from 'react';
 import {
-  Button, FlatList, View, RefreshControl,
-  TextInput, ToastAndroid
+  Button, FlatList, View, RefreshControl, Image,
+  TextInput, ToastAndroid, TouchableOpacity
 } from 'react-native';
-import { url } from '../../vars.js';
+import { url } from '../../vars';
 import axios from 'axios';
-import styles from './styles.js';
-import Loading from '../../components/Loading.js';
-import LoadingMore from '../../components/LoadingMore.js';
-import Recommendation from './Recommendation.js';
-import Error from '../../components/Error.js';
+import styles from './styles';
+import Loading from '../../components/Loading';
+import LoadingMore from '../../components/LoadingMore';
+import Recommendation from './Recommendation';
+import Error from '../../components/Error';
 
 const SearchBox = ({ navigation }) => {
   const [input, setInput] = useState('');
@@ -21,7 +21,7 @@ const SearchBox = ({ navigation }) => {
     }
   }
   return (
-    <View style={styles.root}>
+    <View style={styles.searchContainer}>
       <TextInput
         style={styles.input}
         keyboardType='default'
@@ -34,6 +34,15 @@ const SearchBox = ({ navigation }) => {
   );
 };
 
+const Bookmarks = ({ navigation }) => (
+  <TouchableOpacity onPress={() => navigation.navigate('Bookmarks')}>
+    <Image
+      alt="Salvos"
+      style={{ width: 18, height: 18 }}
+      source={require('../../../assets/bookmarked.png')} />
+  </TouchableOpacity>
+);
+
 class Home extends Component {
   state = {
     error: null,
@@ -45,6 +54,9 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.updateRecommendedList();
+    this.props.navigation.setOptions({
+      headerRight: () => (<Bookmarks navigation={this.props.navigation} />)
+    });
   }
   reset() {
     this.setState({
@@ -115,7 +127,7 @@ class Home extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.root}>
         {this.state.isLoading ? this.whenLoading() : (
           this.state.error ? this.onError() : this.onSuccess())}
       </View>
