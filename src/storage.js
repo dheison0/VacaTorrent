@@ -22,7 +22,7 @@ exp.getBookmarks = async () => {
     const data = await AsyncStorage.getItem(k);
     return JSON.parse(data);
   }));
-  bookmarksData.sort((a, b) => a.timestamp < b.timestamp);
+  bookmarksData.sort((a, b) => a.timestamp < b.timestamp ? 0 : -1);
   return bookmarksData;
 };
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TouchableOpacity, Image, ToastAndroid } from 'react-native';
+import { colors } from '../../init';
 import storage from '../../storage';
 
 const img = {
@@ -25,6 +26,7 @@ function BookmarkButton({ data }) {
     <TouchableOpacity onPress={() => buttonPressed()}>
       <Image
         source={isBookmarked ? img.marked : img.mark}
+        tintColor={colors.images}
         style={{ width: 18, height: 18 }}
       />
     </TouchableOpacity>

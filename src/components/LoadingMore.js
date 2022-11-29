@@ -1,10 +1,11 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { colors } from "../init";
 
 const Footer = ({ isLoading }) => (
   <>
     {isLoading ? (
       <View style={styles.loadingMore}>
-        <ActivityIndicator color="#11E" size="large" />
+        <ActivityIndicator color={colors.loadingAndButtons} size="large" />
         <Text style={styles.loadingMoreText}>Carregando mais...</Text>
       </View>
     ) : null}
@@ -19,7 +20,8 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   loadingMoreText: {
-    fontSize: 18
+    fontSize: 18,
+    color: colors.text
   }
 });
 

@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../init";
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: colors.background
+  },
   container: {
     flex: 1,
   },
@@ -18,12 +23,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: 'center',
-    margin: 15
+    margin: 15,
+    color: colors.text
   },
   sinopse: {
     fontSize: 16,
     margin: 10,
-    marginBottom: 20
+    marginBottom: 20,
+    color: colors.description
   },
   link: {
     flex: 1,
@@ -35,7 +42,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imdbRating: {
-    fontSize: 16
+    fontSize: 16,
+    color: colors.text
   }
 });
 

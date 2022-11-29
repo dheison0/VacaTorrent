@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import {
   Button, ScrollView, Text, Image, View,
-  Linking, ToastAndroid, useColorScheme
+  Linking, ToastAndroid
 } from 'react-native';
-import { url } from '../../vars';
+import { colors, url } from '../../init';
 import axios from 'axios';
 import styles from './styles';
 import BookmarkButton from './bookmark';
@@ -14,6 +14,7 @@ const IMDB = ({ rating }) => (
   <View style={styles.imdb}>
     <Image
       style={{ width: 26, height: 26 }}
+      tintColor={colors.images}
       source={require('../../../assets/star.png')}
     />
     <Text style={styles.imdbRating}>{rating}</Text>
@@ -24,6 +25,7 @@ const LinkButton = ({ item }) => (
   <View style={styles.link}>
     <Button
       title={item.title}
+      color={colors.loadingAndButtons}
       onPress={() => {
         Linking.openURL(item.url).catch(() => ToastAndroid.show(
           "Não foi possivel abrir o link!\nTalvez você não possua nenhum app compativel com Torrent",
@@ -58,6 +60,8 @@ class DownloadScreen extends Component {
   }
   constructor(props) {
     super(props);
+  }
+  componentDidMount() {
     this.getMovieInformations();
   }
   getMovieInformations() {
@@ -86,25 +90,20 @@ class DownloadScreen extends Component {
       });
     });
   }
-  whenLoading() {
-    return (<Loading msg="Buscando informações..." />);
-  }
-  onSuccess() {
-    return (<Download data={this.state.result} />);
-  }
-  onError() {
-    return (
-      <Error
-        msg={this.state.error}
-        onRetry={() => this.getMovieInformations()}
-      />
-    )
-  }
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        {this.state.isLoading ? this.whenLoading() : (
-          this.state.error ? this.onError() : this.onSuccess()
+      <View style={styles.root}>
+        {this.state.isLoading ? (
+          <Loading msg="Buscando informações..." />
+        ) : (
+          this.state.error ? (
+            <Error
+              msg={this.state.error}
+              onRetry={() => this.getMovieInformations()}
+            />
+          ) : (
+            <Download data={this.state.result} />
+          )
         )}
       </View>
     );

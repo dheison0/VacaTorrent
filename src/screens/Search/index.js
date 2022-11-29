@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import { FlatList, ToastAndroid, View } from 'react-native';
-import { url } from '../../vars';
+import { url } from '../../init';
 import axios from 'axios';
-import styles from './styles';
 import Loading from '../../components/Loading';
 import LoadingMore from '../../components/LoadingMore';
 import Error from '../../components/Error';
@@ -20,6 +19,8 @@ class Search extends Component {
   constructor(props) {
     super(props);
     props.navigation.setOptions({ title: `Procurar: ${props.route.params.query}` })
+  }
+  componentDidMount() {
     this.getSearchResults();
   }
   reset() {
@@ -69,36 +70,29 @@ class Search extends Component {
       });
     });
   }
-  whenLoading() {
-    return (<Loading msg="Pesquisando..." />);
-  }
-  onError() {
-    return (
-      <Error msg={this.state.error} onRetry={() => this.reset()} />
-    );
-  }
-  onSuccess() {
-    return (
-      <FlatList
-        data={this.state.results}
-        renderItem={({ item }) => (
-          <SearchResult
-            data={item}
-            onPress={() => this.props.navigation.navigate("Baixar", item)}
-          />
-        )}
-        ListFooterComponent={(
-          <LoadingMore isLoading={this.state.isLoadingMore} />
-        )}
-        onEndReached={() => this.getSearchResults()}
-      />
-    );
-  }
   render() {
     return (
       <View style={{ flex: 1 }}>
-        {this.state.isLoading ? this.whenLoading() : (
-          this.state.error ? this.onError() : this.onSuccess()
+        {this.state.isLoading ? (
+          <Loading msg="Pesquisando..." />
+        ) : (
+          this.state.error ? (
+            <Error msg={this.state.error} onRetry={() => this.reset()} />
+          ) : (
+            <FlatList
+              data={this.state.results}
+              renderItem={({ item }) => (
+                <SearchResult
+                  data={item}
+                  onPress={() => this.props.navigation.navigate("Baixar", item)}
+                />
+              )}
+              ListFooterComponent={(
+                <LoadingMore isLoading={this.state.isLoadingMore} />
+              )}
+              onEndReached={() => this.getSearchResults()}
+            />
+          )
         )}
       </View>
     );

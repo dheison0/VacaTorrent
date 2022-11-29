@@ -3,7 +3,7 @@ import {
   Button, FlatList, View, RefreshControl, Image,
   TextInput, ToastAndroid, TouchableOpacity
 } from 'react-native';
-import { url } from '../../vars';
+import { colors, url } from '../../init';
 import axios from 'axios';
 import styles from './styles';
 import Loading from '../../components/Loading';
@@ -26,10 +26,11 @@ const SearchBox = ({ navigation }) => {
         style={styles.input}
         keyboardType='default'
         placeholder='O que você deseja?'
+        placeholderTextColor={colors.placeholder}
         onChangeText={text => setInput(text)}
         onEndEditing={search}
       />
-      <Button title="Procurar" onPress={search} />
+      <Button title="Procurar" onPress={search} color={colors.loadingAndButtons} />
     </View>
   );
 };
@@ -39,6 +40,7 @@ const Bookmarks = ({ navigation }) => (
     <Image
       alt="Salvos"
       style={{ width: 18, height: 18 }}
+      tintColor={colors.images}
       source={require('../../../assets/bookmarked.png')} />
   </TouchableOpacity>
 );
@@ -53,10 +55,12 @@ class Home extends Component {
   }
   constructor(props) {
     super(props);
-    this.updateRecommendedList();
     this.props.navigation.setOptions({
       headerRight: () => (<Bookmarks navigation={this.props.navigation} />)
     });
+  }
+  componentDidMount() {
+    this.updateRecommendedList();
   }
   reset() {
     this.setState({
@@ -94,42 +98,35 @@ class Home extends Component {
         });
       });
   }
-  onSuccess() {
-    return (
-      <>
-        <SearchBox navigation={this.props.navigation} />
-        <FlatList
-          data={this.state.results}
-          renderItem={({ item }) => (
-            <Recommendation
-              data={item}
-              onPress={() => this.props.navigation.navigate("Baixar", item)}
-            />
-          )}
-          refreshControl={(<RefreshControl onRefresh={() => this.reset()} />)}
-          ListFooterComponent={(
-            <LoadingMore isLoading={this.state.isLoadingMore} />
-          )}
-          onEndReached={() => this.updateRecommendedList()}
-        />
-      </>
-    );
-  }
-  onError() {
-    return (
-      <Error msg={this.state.error} onRetry={() => this.reset()} />
-    );
-  }
-  whenLoading() {
-    return (
-      <Loading msg="Carregando recomendados..." />
-    );
-  }
   render() {
+    const renderRecommendation = ({ item }) => (
+      <Recommendation
+        data={item}
+        onPress={() => this.props.navigation.navigate("Baixar", item)}
+      />
+    );
+    const footer = () => (
+      <LoadingMore isLoading={this.state.isLoadingMore} />
+    );
     return (
       <View style={styles.root}>
-        {this.state.isLoading ? this.whenLoading() : (
-          this.state.error ? this.onError() : this.onSuccess())}
+        {this.state.isLoading ? (
+          <Loading msg="Carregando recomendados..." />
+        ) : (
+          this.state.error ? (
+            <Error msg={this.state.error} onRetry={() => this.reset()} />
+          ) : (
+            <>
+              <SearchBox navigation={this.props.navigation} />
+              <FlatList
+                data={this.state.results}
+                renderItem={renderRecommendation}
+                refreshControl={(<RefreshControl onRefresh={() => this.reset()} />)}
+                ListFooterComponent={footer}
+                onEndReached={() => this.updateRecommendedList()}
+              />
+            </>
+          ))}
       </View>
     )
   }

@@ -1,4 +1,5 @@
 import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
+import { colors } from "../init";
 
 const Container = ({ children, thumbnail, onPress }) => (
   <TouchableOpacity style={styles.containerWrap} onPress={onPress}>
@@ -13,10 +14,10 @@ const Container = ({ children, thumbnail, onPress }) => (
 
 const styles = StyleSheet.create({
   containerWrap: {
-    backgroundColor: '#ddeee7',
     margin: 8,
     padding: 10,
     borderRadius: 6,
+    backgroundColor: colors.container
   },
   container: {
     flex: 1,
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: 125,
     height: 185,
-    marginRight: 5,
+    marginRight: 10,
     borderRadius: 4,
   }
 });

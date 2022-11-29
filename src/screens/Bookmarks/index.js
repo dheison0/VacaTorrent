@@ -22,6 +22,8 @@ class BookmarksScreen extends Component {
   }
   constructor() {
     super();
+  }
+  componentDidMount() {
     storage.getBookmarks()
       .then(r => this.setState({
         isLoading: false,
@@ -31,7 +33,7 @@ class BookmarksScreen extends Component {
   }
   render() {
     return (
-      <View style={styles.flex}>
+      <View style={styles.root}>
         {this.state.isLoading ? (
           <Loading msg="Carregando bookmarks..." />
         ) : (

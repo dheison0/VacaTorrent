@@ -1,4 +1,5 @@
 import { Button, Image, Text, StyleSheet, View } from 'react-native';
+import { colors } from '../init';
 
 const Error = ({ msg, onRetry }) => (
   <View style={style.container}>
@@ -20,7 +21,8 @@ const style = StyleSheet.create({
   },
   error: {
     fontSize: 16,
-    margin: 15
+    margin: 15,
+    color: colors.text
   }
 });
 

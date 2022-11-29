@@ -6,12 +6,11 @@ const Recommendation = ({ data, onPress }) => (
   <Container onPress={onPress} thumbnail={data.thumbnail}>
     <View style={styles.informations}>
       <Text style={styles.title}>{data.title}</Text>
-      <View>
-        <Text>Idioma: {data.talk_type}</Text>
-        <Text>IMDB: {data.imdb}</Text>
-        <Text>Ano: {data.year}</Text>
-      </View>
-      <View></View>
+      <Text style={styles.description}>
+        Idioma: {data.talk_type}{'\n'}
+        IMDB: {data.imdb}{'\n'}
+        Ano: {data.year}
+      </Text>
     </View>
   </Container>
 );

@@ -1,13 +1,11 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../init";
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  bookmark: {
-    backgroundColor: '#CCC',
-    margin: 8,
-    padding: 5,
-    borderRadius: 5,
-    flexDirection: 'row'
+  root: {
+    flex: 1,
+    backgroundColor: colors.background,
   },
   empty: {
     flex: 1,
@@ -16,14 +14,17 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
+    color: colors.text
   },
   title: {
     fontSize: 18,
     textAlign: 'center',
     margin: 10,
+    color: colors.text
   },
   sinopse: {
-    margin: 4
+    margin: 4,
+    color: colors.description
   },
   saved: {
     alignItems: 'flex-end'
