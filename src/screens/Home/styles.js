@@ -4,12 +4,12 @@ import { colors } from "../../init";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
   },
   searchContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     margin: 15,
-    alignItems: 'center'
+    alignItems: "center",
   },
   input: {
     flex: 1,
@@ -18,23 +18,27 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 3,
     borderColor: colors.inputBorder,
-    color: colors.text
+    color: colors.text,
   },
   informations: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   title: {
-    flex:1,
+    flex: 1,
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 5,
-    color: colors.text
+    color: colors.text,
   },
   description: {
     flex: 1,
     color: colors.description,
-  }
+  },
+  endReached: {
+    flex: 1,
+    alignItems: "center",
+  },
 });
 
 export default styles;

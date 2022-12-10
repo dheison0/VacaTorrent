@@ -9,26 +9,26 @@ const styles = StyleSheet.create({
   },
   empty: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   emptyText: {
     fontSize: 16,
-    color: colors.text
+    color: colors.text,
   },
   title: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10,
-    color: colors.text
+    color: colors.text,
   },
   sinopse: {
     margin: 4,
-    color: colors.description
+    color: colors.description,
   },
   saved: {
-    alignItems: 'flex-end'
-  }
+    alignItems: "flex-end",
+  },
 });
 
 export default styles;

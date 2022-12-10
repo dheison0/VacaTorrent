@@ -1,15 +1,18 @@
-import { View, Text } from 'react-native';
-import styles from './styles';
-import Container from '../../components/Container';
+import { View, Text } from "react-native";
+import styles from "./styles";
+import Container from "../../components/Container";
 
-const Recommendation = ({ data, onPress }) => (
-  <Container onPress={onPress} thumbnail={data.thumbnail}>
+const Recommendation = ({ item, navigation }) => (
+  <Container
+    onPress={() => navigation.navigate("Baixar", item)}
+    thumbnail={item.thumbnail}
+  >
     <View style={styles.informations}>
-      <Text style={styles.title}>{data.title}</Text>
+      <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.description}>
-        Idioma: {data.talk_type}{'\n'}
-        IMDB: {data.imdb}{'\n'}
-        Ano: {data.year}
+        Idioma: {item.talk_type + "\n"}
+        IMDB: {item.imdb + "\n"}
+        Ano: {item.year}
       </Text>
     </View>
   </Container>

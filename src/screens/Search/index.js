@@ -1,98 +1,90 @@
-import { Component } from 'react';
-import { FlatList, ToastAndroid, View } from 'react-native';
-import { url } from '../../init';
-import axios from 'axios';
-import Loading from '../../components/Loading';
-import LoadingMore from '../../components/LoadingMore';
-import Error from '../../components/Error';
-import SearchResult from './SearchResult';
+import { Component } from "react";
+import { FlatList, ToastAndroid, View } from "react-native";
+import { apiServerURL } from "../../init";
+import axios from "axios";
+import Loading from "../../components/Loading";
+import LoadingMore from "../../components/LoadingMore";
+import Error from "../../components/Error";
+import SearchResult from "./SearchResult";
 
 class Search extends Component {
-  state = {
+  defaultState = {
     error: null,
     isLoading: true,
     isLoadingMore: false,
-    loadPage: 1,
+    page: 1,
     results: [],
     stopLoadingMore: false,
-  }
+  };
   constructor(props) {
     super(props);
-    props.navigation.setOptions({ title: `Procurar: ${props.route.params.query}` })
+    this.state = { ...this.defaultState };
+    props.navigation.setOptions({
+      title: `Procurar: ${props.route.params.query}`,
+    });
   }
   componentDidMount() {
     this.getSearchResults();
   }
   reset() {
-    this.setState({
-      error: null,
-      isLoading: true,
-      isLoadingMore: false,
-      loadPage: 1,
-      results: [],
-      stopLoadingMore: false,
-    });
+    this.setState({ ...this.defaultState });
     this.getSearchResults();
   }
-  getSearchResults() {
+  async getSearchResults() {
     if (this.state.stopLoadingMore || this.state.isLoadingMore) {
       return;
     } else if (!this.state.isLoading) {
       this.setState({ isLoadingMore: true });
     }
-    axios.get(
-      `${url}/search`,
-      {
+    let response;
+    try {
+      response = await axios.get(`${apiServerURL}/search`, {
         params: {
-          page: this.state.loadPage,
-          q: this.props.route.params.query
-        }
+          page: this.state.page,
+          q: this.props.route.params.query,
+        },
+      });
+    } catch (error) {
+      let errorMessage = `Falha durante a pesquisa!\n`;
+      errorMessage += `Erro ${error.response.status}: ${error.response.data.error}`;
+      if (this.state.isLoadingMore) {
+        ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+        this.setState({ error: null });
+      } else {
+        this.setState({ error: errorMessage });
       }
-    ).then(response => {
       this.setState({
         isLoading: false,
         isLoadingMore: false,
-        loadPage: this.state.loadPage + 1,
-        results: [...this.state.results, ...response.data.results],
-        stopLoadingMore: !response.data.page.has_next,
       });
-    }).catch(error => {
-      const errMsg = `Falha durante a pesquisa!\n${error.toString()}`;
-      if (this.state.isLoadingMore) {
-        ToastAndroid.show(errMsg, ToastAndroid.LONG);
-        this.setState({ error: null });
-      } else {
-        this.setState({ error: errMsg });
-      }
-      this.setState({
-        isLoading: false,
-        isLoadingMore: false
-      });
+    }
+    this.setState({
+      isLoading: false,
+      isLoadingMore: false,
+      page: this.state.page + 1,
+      results: [...this.state.results, ...response.data.results],
+      stopLoadingMore: !response.data.page.has_next,
     });
   }
   render() {
+    const searchFooter = () => (
+      <>{this.state.isLoadingMore ? <LoadingMore /> : null}</>
+    );
     return (
       <View style={{ flex: 1 }}>
         {this.state.isLoading ? (
           <Loading msg="Pesquisando..." />
+        ) : this.state.error ? (
+          <Error msg={this.state.error} onRetry={() => this.reset()} />
         ) : (
-          this.state.error ? (
-            <Error msg={this.state.error} onRetry={() => this.reset()} />
-          ) : (
-            <FlatList
-              data={this.state.results}
-              renderItem={({ item }) => (
-                <SearchResult
-                  data={item}
-                  onPress={() => this.props.navigation.navigate("Baixar", item)}
-                />
-              )}
-              ListFooterComponent={(
-                <LoadingMore isLoading={this.state.isLoadingMore} />
-              )}
-              onEndReached={() => this.getSearchResults()}
-            />
-          )
+          <FlatList
+            data={this.state.results}
+            renderItem={({ item }) => (
+              <SearchResult item={item} navigation={this.props.navigation} />
+            )}
+            ListFooterComponent={searchFooter}
+            onEndReached={() => this.getSearchResults()}
+          />
         )}
       </View>
     );
