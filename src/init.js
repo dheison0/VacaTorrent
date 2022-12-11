@@ -1,27 +1,36 @@
 import { Appearance } from "react-native";
-import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 import * as NavigationBar from "expo-navigation-bar";
+import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
-const darkThemeEnabled = Appearance.getColorScheme() === "dark";
 const apiServerURL = "https://vacatorrent-api-dheisom.koyeb.app";
+const darkThemeEnabled = Appearance.getColorScheme() === "dark";
 
 const colors = {
-  header: darkThemeEnabled ? "#282a36" : "#FFF",
-  background: darkThemeEnabled ? "#2B2830" : "#ffffff",
-  container: darkThemeEnabled ? "#452338" : "#ddeee7",
+  background: darkThemeEnabled ? "#282a36" : "#ffffff",
+  container: darkThemeEnabled ? "#44475a" : "#ddeee7",
   inputBorder: darkThemeEnabled ? "#745D75" : "#95adbe",
-  text: darkThemeEnabled ? "#EFEFEF" : "#111111",
-  description: darkThemeEnabled ? "#B3ACB5" : "#444444",
+  text: darkThemeEnabled ? "#f8f8f2" : "#111111",
+  description: darkThemeEnabled ? "#d1c1d2" : "#444444",
   placeholder: darkThemeEnabled ? "#888888" : "#555555",
   images: darkThemeEnabled ? "#d0d0d0" : "#333333",
-  loadingAndButtons: darkThemeEnabled ? "#C04F57" : "#5555EE",
+  loadingAndButtons: darkThemeEnabled ? "#6272a4" : "#5555EE",
 };
 
-const rootTheme = {
+const appRootTheme = {
   ...(darkThemeEnabled ? DarkTheme : DefaultTheme),
   colors: {
     ...(darkThemeEnabled ? DarkTheme.colors : DefaultTheme.colors),
-    background: colors.header,
+    background: colors.background,
+  },
+};
+
+const defaultScreenOptions = {
+  headerTintColor: colors.images,
+  headerStyle: {
+    backgroundColor: colors.background,
+  },
+  headerTitleStyle: {
+    color: colors.text,
   },
 };
 
@@ -29,4 +38,10 @@ const rootTheme = {
 NavigationBar.setBackgroundColorAsync(colors.background);
 NavigationBar.setButtonStyleAsync(darkThemeEnabled ? "light" : "dark");
 
-export { apiServerURL, colors, darkThemeEnabled, rootTheme };
+export {
+  apiServerURL,
+  appRootTheme,
+  colors,
+  darkThemeEnabled,
+  defaultScreenOptions,
+};

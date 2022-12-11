@@ -3,10 +3,6 @@ import { colors } from "../../init";
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  root: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   empty: {
     flex: 1,
     alignItems: "center",
@@ -25,9 +21,6 @@ const styles = StyleSheet.create({
   sinopse: {
     margin: 4,
     color: colors.description,
-  },
-  saved: {
-    alignItems: "flex-end",
   },
 });
 

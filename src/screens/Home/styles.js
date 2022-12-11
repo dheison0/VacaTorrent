@@ -4,7 +4,6 @@ import { colors } from "../../init";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   searchContainer: {
     flexDirection: "row",
@@ -34,10 +33,6 @@ const styles = StyleSheet.create({
   description: {
     flex: 1,
     color: colors.description,
-  },
-  endReached: {
-    flex: 1,
-    alignItems: "center",
   },
 });
 

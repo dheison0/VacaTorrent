@@ -4,7 +4,6 @@ import { colors } from "../../init";
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   container: {
     flex: 1,

@@ -39,7 +39,7 @@ class BookmarksScreen extends Component {
   }
   render() {
     return (
-      <View style={styles.root}>
+      <View style={styles.flex}>
         {this.state.isLoading ? (
           <Loading msg="Carregando bookmarks..." />
         ) : this.state.empty ? (

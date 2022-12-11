@@ -1,12 +1,11 @@
 import { Component } from "react";
 import {
   FlatList,
-  View,
-  RefreshControl,
   Image,
+  RefreshControl,
   ToastAndroid,
   TouchableOpacity,
-  Text,
+  View,
 } from "react-native";
 import { colors, apiServerURL } from "../../init";
 import axios from "axios";
@@ -85,15 +84,7 @@ class Home extends Component {
       <Recommendation item={item} navigation={this.props.navigation} />
     );
     const listFooter = () => (
-      <>
-        {this.state.isLoadingMore ? (
-          <LoadingMore />
-        ) : (
-          <View style={styles.endReached}>
-            <Text>Você encontrou o fim da internet!</Text>
-          </View>
-        )}
-      </>
+      <>{this.state.isLoadingMore ? <LoadingMore /> : null}</>
     );
     return (
       <View style={styles.root}>
