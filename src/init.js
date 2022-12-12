@@ -2,7 +2,7 @@ import { Appearance } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
-const apiServerURL = "https://vacatorrent-api-dheisom.koyeb.app";
+const apiServerURL = "https://vacatorrent-api-dheisom.koyeb.app/v1";
 const darkThemeEnabled = Appearance.getColorScheme() === "dark";
 
 const colors = {

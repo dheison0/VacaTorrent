@@ -54,12 +54,12 @@ class Home extends Component {
     }
     let response;
     try {
-      response = await axios.get(`${apiServerURL}/${this.state.page}`, {
+      response = await axios.get(`${apiServerURL}/home/${this.state.page}`, {
         timeout: 10000,
       });
     } catch (error) {
       let errorMessage = `Não foi possivel obter a lista de recomendados!\n`;
-      errorMessage += `Erro ${error.response.status}: ${error.response.data.error}`;
+      errorMessage += `Erro ${error.response.status}: ${error.message}`;
       if (this.state.isLoadingMore) {
         ToastAndroid.show(errorMessage, ToastAndroid.LONG);
       } else {
