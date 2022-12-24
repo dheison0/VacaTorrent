@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     margin: 5,
-    color: colors.text,
+    color: colors.texts.normal,
   },
   sinopse: {
     flex: 1,
     margin: 3,
-    color: colors.description,
+    color: colors.texts.sinopse,
   },
 });
 

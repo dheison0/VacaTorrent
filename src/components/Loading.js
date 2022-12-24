@@ -3,7 +3,7 @@ import { colors } from "../init";
 
 const Loading = ({ msg }) => (
   <View style={style.container}>
-    <ActivityIndicator size={54} color={colors.loadingAndButtons} />
+    <ActivityIndicator size={54} color={colors.loading} />
     <Text style={style.text}>{msg}</Text>
   </View>
 );
@@ -18,7 +18,7 @@ const style = StyleSheet.create({
   text: {
     margin: 15,
     fontSize: 16,
-    color: colors.text
+    color: colors.texts.normal
   }
 });
 

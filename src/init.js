@@ -2,40 +2,50 @@ import { Appearance } from "react-native";
 import * as NavigationBar from "expo-navigation-bar";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
-const apiServerURL = "https://vacatorrent-api-dheisom.koyeb.app/v1";
+const apiServerURL = "http://dheisom.vps-kinghost.net:1337/v1";
 const darkThemeEnabled = Appearance.getColorScheme() === "dark";
 
 const colors = {
-  background: darkThemeEnabled ? "#282a36" : "#ffffff",
-  container: darkThemeEnabled ? "#44475a" : "#ddeee7",
+  box: {
+    root: darkThemeEnabled ? "#282a36" : "#ffffff",
+    container: darkThemeEnabled ? "#44475a" : "#F5EBE0",
+  },
+  texts: {
+    normal: darkThemeEnabled ? "#f8f8f2" : "#111111",
+    sinopse: darkThemeEnabled ? "#d1c1d2" : "#444444",
+    placeholder: darkThemeEnabled ? "#888888" : "#555555",
+  },
+  buttons: {
+    icons: darkThemeEnabled ? "#d0d0d0" : "#333333",
+    search: darkThemeEnabled ? "#6272a4" : "#a475f9",
+    download: darkThemeEnabled ? "#bd93f9" : "#a475f9",
+    copyLink: darkThemeEnabled ? "#ff79c6" : "#a475f9",
+  },
+  loading: darkThemeEnabled ? "#bd93f9" : "#a475f9",
   inputBorder: darkThemeEnabled ? "#745D75" : "#95adbe",
-  text: darkThemeEnabled ? "#f8f8f2" : "#111111",
-  description: darkThemeEnabled ? "#d1c1d2" : "#444444",
-  placeholder: darkThemeEnabled ? "#888888" : "#555555",
-  images: darkThemeEnabled ? "#d0d0d0" : "#333333",
-  loadingAndButtons: darkThemeEnabled ? "#6272a4" : "#5555EE",
 };
 
+let theme = darkThemeEnabled ? DarkTheme : DefaultTheme;
 const appRootTheme = {
-  ...(darkThemeEnabled ? DarkTheme : DefaultTheme),
+  ...theme,
   colors: {
-    ...(darkThemeEnabled ? DarkTheme.colors : DefaultTheme.colors),
-    background: colors.background,
+    ...theme.colors,
+    background: colors.box.root,
   },
 };
 
 const defaultScreenOptions = {
-  headerTintColor: colors.images,
+  headerTintColor: colors.buttons.icons,
   headerStyle: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.box.root,
   },
   headerTitleStyle: {
-    color: colors.text,
+    color: colors.texts.normal,
   },
 };
 
 // Set navigation bar style
-NavigationBar.setBackgroundColorAsync(colors.background);
+NavigationBar.setBackgroundColorAsync(colors.box.root);
 NavigationBar.setButtonStyleAsync(darkThemeEnabled ? "light" : "dark");
 
 export {

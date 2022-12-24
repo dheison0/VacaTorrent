@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: "center",
     margin: 15,
-    color: colors.text,
+    color: colors.texts.normal,
   },
   sinopse: {
     fontSize: 16,
     margin: 10,
     marginBottom: 20,
-    color: colors.description,
+    color: colors.texts.sinopse,
   },
   link: {
     flex: 1,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   imdbRating: {
     fontSize: 16,
-    color: colors.text,
+    color: colors.texts.normal,
   },
 });
 

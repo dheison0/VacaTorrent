@@ -6,7 +6,8 @@ const Container = ({ children, thumbnail, onPress }) => (
     <View style={styles.container}>
       <Image
         style={styles.thumbnail}
-        source={{ uri: thumbnail }} />
+        source={{ uri: thumbnail }}
+      />
       {children}
     </View>
   </TouchableOpacity>
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 10,
     borderRadius: 6,
-    backgroundColor: colors.container
+    backgroundColor: colors.box.container
   },
   container: {
     flex: 1,

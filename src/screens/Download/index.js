@@ -12,7 +12,7 @@ const IMDB = ({ rating }) => (
   <View style={styles.imdb}>
     <Image
       style={{ width: 26, height: 26 }}
-      tintColor={colors.images}
+      tintColor={colors.buttons.icons}
       source={require("../../../assets/star.png")}
     />
     <Text style={styles.imdbRating}>{rating}</Text>

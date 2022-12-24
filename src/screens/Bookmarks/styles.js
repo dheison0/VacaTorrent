@@ -10,17 +10,17 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: colors.text,
+    color: colors.texts.normal,
   },
   title: {
     fontSize: 18,
     textAlign: "center",
     margin: 10,
-    color: colors.text,
+    color: colors.texts.normal,
   },
   sinopse: {
     margin: 4,
-    color: colors.description,
+    color: colors.texts.sinopse,
   },
 });
 

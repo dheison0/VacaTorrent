@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 3,
     borderColor: colors.inputBorder,
-    color: colors.text,
+    color: colors.texts.normal,
   },
   informations: {
     flex: 1,
@@ -28,11 +28,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     margin: 5,
-    color: colors.text,
+    color: colors.texts.normal,
   },
   description: {
     flex: 1,
-    color: colors.description,
+    color: colors.texts.sinopse,
   },
 });
 

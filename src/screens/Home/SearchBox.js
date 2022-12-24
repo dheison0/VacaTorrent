@@ -22,11 +22,11 @@ const SearchBox = ({ navigation }) => {
         onChangeText={(t) => setQuery(t)}
         onSubmitEditing={search}
         placeholder="O que você deseja?"
-        placeholderTextColor={colors.placeholder}
+        placeholderTextColor={colors.texts.placeholder}
         style={styles.input}
       />
       <Button
-        color={colors.loadingAndButtons}
+        color={colors.buttons.search}
         onPress={search}
         title="Procurar"
       />

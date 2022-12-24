@@ -22,7 +22,7 @@ const style = StyleSheet.create({
   error: {
     fontSize: 16,
     margin: 15,
-    color: colors.text
+    color: colors.texts.normal
   }
 });
 

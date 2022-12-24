@@ -3,7 +3,7 @@ import { colors } from "../init";
 
 const LoadingMore = () => (
   <View style={styles.container}>
-    <ActivityIndicator color={colors.loadingAndButtons} size="large" />
+    <ActivityIndicator color={colors.loading} size="large" />
     <Text style={styles.loadingMoreText}>Carregando mais...</Text>
   </View>
 );
@@ -13,11 +13,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 5,
+    margin: 8,
   },
   loadingMoreText: {
+    marginLeft: 5,
     fontSize: 18,
-    color: colors.text,
+    color: colors.texts.normal,
   },
 });
 

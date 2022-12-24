@@ -2,7 +2,6 @@ import { Component } from "react";
 import {
   FlatList,
   Image,
-  RefreshControl,
   ToastAndroid,
   TouchableOpacity,
   View,
@@ -21,7 +20,7 @@ const Bookmarks = ({ navigation }) => (
     <Image
       source={require("../../../assets/bookmarked.png")}
       style={{ width: 18, height: 18 }}
-      tintColor={colors.images}
+      tintColor={colors.buttons.icons}
     />
   </TouchableOpacity>
 );
@@ -29,8 +28,6 @@ const Bookmarks = ({ navigation }) => (
 class Home extends Component {
   defaultState = {
     error: null,
-    isLoading: true,
-    isLoadingMore: false,
     page: 1,
     results: [],
   };
@@ -42,39 +39,36 @@ class Home extends Component {
     });
   }
   componentDidMount() {
-    this.updateRecommendedList();
+    this.reachMoreRecommendations();
   }
   reset() {
     this.setState({ ...this.defaultState });
-    this.updateRecommendedList();
+    this.reachMoreRecommendations();
   }
-  async updateRecommendedList() {
-    if (!this.state.isLoading) {
-      this.setState({ isLoadingMore: true });
-    }
+  async reachMoreRecommendations() {
     let response;
     try {
-      response = await axios.get(`${apiServerURL}/home/${this.state.page}`, {
-        timeout: 10000,
-      });
-    } catch (error) {
+      response = await axios.get(
+        `${apiServerURL}/home/${this.state.page}`,
+        { timeout: 10000 }
+      );
+    } catch (err) {
       let errorMessage = `Não foi possivel obter a lista de recomendados!\n`;
-      errorMessage += `Erro ${error.response.status}: ${error.message}`;
+      if (!err.response) {
+        errorMessage += `Servidor não alcançado a tempo.`;
+      } else if (err.response.status == 500) {
+        errorMessage += `Erro 500: Ocorreu um problema interno na API`;
+      } else {
+        errorMessage += `Erro ${err.response.status}: ${err.response.data.error}`;
+      }
       if (this.state.isLoadingMore) {
         ToastAndroid.show(errorMessage, ToastAndroid.LONG);
       } else {
         this.setState({ error: errorMessage });
       }
-      this.setState({
-        isLoading: false,
-        isLoadingMore: false,
-      });
       return;
     }
     this.setState({
-      error: null,
-      isLoading: false,
-      isLoadingMore: false,
       page: this.state.page + 1,
       results: [...this.state.results, ...response.data],
     });
@@ -83,27 +77,24 @@ class Home extends Component {
     const renderRecommendation = ({ item }) => (
       <Recommendation item={item} navigation={this.props.navigation} />
     );
-    const listFooter = () => (
-      <>{this.state.isLoadingMore ? <LoadingMore /> : null}</>
-    );
     return (
       <View style={styles.root}>
-        {this.state.isLoading ? (
-          <Loading msg="Carregando recomendados..." />
-        ) : this.state.error ? (
+        <SearchBox navigation={this.props.navigation} />
+        {this.state.results.length == 0 ? (
+          <Loading msg="Carregando lista de recommendados..." />
+        ) : (this.state.error != null ? (
           <Error msg={this.state.error} onRetry={() => this.reset()} />
         ) : (
-          <>
-            <SearchBox navigation={this.props.navigation} />
-            <FlatList
-              data={this.state.results}
-              renderItem={renderRecommendation}
-              refreshControl={<RefreshControl onRefresh={() => this.reset()} />}
-              ListFooterComponent={listFooter}
-              onEndReached={() => this.updateRecommendedList()}
-            />
-          </>
-        )}
+          <FlatList
+            data={this.state.results}
+            renderItem={renderRecommendation}
+            ListFooterComponent={LoadingMore}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => this.reachMoreRecommendations()}
+            onRefresh={() => this.reset()}
+            refreshing={false}
+          />
+        ))}
       </View>
     );
   }

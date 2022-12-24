@@ -7,7 +7,7 @@ const LinkButtons = ({ item }) => (
   <View style={styles.link}>
     <Button
       title={item.title}
-      color={colors.loadingAndButtons}
+      color={colors.buttons.download}
       onPress={() => {
         Linking.openURL(item.url).catch(() =>
           ToastAndroid.show(
@@ -19,7 +19,8 @@ const LinkButtons = ({ item }) => (
       }}
     />
     <Button
-      title="Copy"
+      title="Copiar link"
+      color={colors.buttons.copyLink}
       onPress={async () => {
         try {
           await Clipboard.setStringAsync(item.url);
