@@ -16,9 +16,13 @@ const Container = ({ children, thumbnail, onPress }) => (
 const styles = StyleSheet.create({
   containerWrap: {
     margin: 8,
+    marginLeft: 12,
+    marginRight: 12,
     padding: 10,
-    borderRadius: 6,
-    backgroundColor: colors.box.container
+    borderRadius: 9,
+    backgroundColor: colors.containers,
+    borderWidth: 2,
+    borderColor: colors.containerBorder
   },
   container: {
     flex: 1,
