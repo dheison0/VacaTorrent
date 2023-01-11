@@ -1824,32 +1824,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
-"@types/prop-types@*":
-  version "15.7.5"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
-  integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
-
-"@types/react-native@~0.70.6":
-  version "0.70.8"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.70.8.tgz#3302a0f7eddcd3350448ca17a9e415d02b1efde6"
-  integrity sha512-jvs5QMOrlyi0ScfT5Brha2roDoOWtbIOadNkp0jsueVen5+pH4SQAYtzL6xu0+dIcx3J/5LtZ/JYby2C1/zUug==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react@*", "@types/react@~18.0.24":
-  version "18.0.26"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.26.tgz#8ad59fc01fef8eaf5c74f4ea392621749f0b7917"
-  integrity sha512-hCR3PJQsAIXyxhTNSiDFY//LhnMZWpNNr5etoCqx/iUfGc5gXWtQR2Phl908jVR6uPXacojQWTg4qRpkxTuGug==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/scheduler@*":
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
-  integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
-
 "@types/yargs-parser@*":
   version "21.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
@@ -2781,11 +2755,6 @@ crypto-random-string@^2.0.0:
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-2.0.0.tgz#ef2a7a966ec11083388369baa02ebead229b30d5"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
 
-csstype@^3.0.2:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
-  integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
-
 dag-map@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/dag-map/-/dag-map-1.0.2.tgz#e8379f041000ed561fc515475c1ed2c85eece8d7"
@@ -3135,10 +3104,10 @@ expo-manifests@~0.4.0:
   dependencies:
     expo-json-utils "~0.4.0"
 
-expo-modules-autolinking@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-1.0.1.tgz#a82eaef2decd1d518458d64cb542c64fc23eacde"
-  integrity sha512-Ch0K/Vb2W7zSPlPKKFr6dwgwge6sSCpl7XPW8jrc7hUy+M72dvcfsBsaphvGNlKIZM6TtpCt0xbUlL48wI2y1A==
+expo-modules-autolinking@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-1.0.2.tgz#f072f342ab797e43b16ddcdef251fcd4db851e1a"
+  integrity sha512-skAUXERKw1gtSw8xsvft9DE0KVhBvw4dujAtgCZoG2l513fN7ds+B5+30ZVgZATMC+EjtlmjKXzhp5QS44DCFA==
   dependencies:
     chalk "^4.1.0"
     commander "^7.2.0"
@@ -3196,9 +3165,9 @@ expo-updates@~0.15.6:
     uuid "^3.4.0"
 
 expo@^47.0.0:
-  version "47.0.12"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.12.tgz#2a8b41217e1cb630f84ea3723031d07354289ae7"
-  integrity sha512-LqECuBpV6arTncksQzOGGQmxOdeQmzm15VqwIJ/c3SWoxiVh5hKf+taUv2oaLmfx2z04TSm1oo56pRSrsL5iIA==
+  version "47.0.13"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.13.tgz#f53f82e7f9e209f8a8b25f2493f58439958368cb"
+  integrity sha512-9VjjGdViCJ9NfWbUE7brkwFBDvKuA35V345vMtHFYNKoGJjXib36yitmawreMDQFv0kMTqTnzc7T2191Pod7Ng==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/cli" "0.4.11"
@@ -3213,7 +3182,7 @@ expo@^47.0.0:
     expo-file-system "~15.1.1"
     expo-font "~11.0.1"
     expo-keep-awake "~11.0.1"
-    expo-modules-autolinking "1.0.1"
+    expo-modules-autolinking "1.0.2"
     expo-modules-core "1.1.1"
     fbemitter "^3.0.0"
     getenv "^1.0.0"
@@ -6492,11 +6461,6 @@ type-is@~1.6.18:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.24"
-
-typescript@^4.6.3:
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
-  integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 ua-parser-js@^0.7.30:
   version "0.7.32"
